@@ -1,5 +1,6 @@
 import flask
 import requests
+import validators
 
 app = flask.Flask(__name__)
 
@@ -26,6 +27,9 @@ def ping():
 
 @app.route('/<path:url>', methods=method_requests_mapping.keys())
 def proxy(url):
+    if not validators.url(url):
+        flask.abort(404)
+
     request_function = method_requests_mapping[flask.request.method]
 
     request_headers = filter(lambda tuple: tuple[0] != "Host",
