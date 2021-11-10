@@ -11,4 +11,4 @@ RUN pipenv sync
 
 COPY . ./
 
-ENTRYPOINT PORT=${PORT} pipenv run python app.py
+ENTRYPOINT pipenv run gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 main:app

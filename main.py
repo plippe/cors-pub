@@ -1,7 +1,5 @@
 import flask
 import requests
-import os
-import waitress
 
 app = flask.Flask(__name__)
 
@@ -53,5 +51,4 @@ def proxy(url):
 
 
 if __name__ == '__main__':
-    port = os.getenv('PORT', 5000)
-    waitress.serve(app, host="0.0.0.0", port=port)
+    app.run(debug=True)
