@@ -1,6 +1,8 @@
 import flask
 import requests
 import validators
+import markdown
+import pathlib
 
 app = flask.Flask(__name__)
 
@@ -17,12 +19,10 @@ method_requests_mapping = {
 
 @app.route('/')
 def index():
-    return ""
+    md = pathlib.Path("README.md").read_text()
+    html = markdown.markdown(md)
 
-
-@app.route('/ping')
-def ping():
-    return "pong"
+    return html
 
 
 @app.route('/<path:url>', methods=method_requests_mapping.keys())
