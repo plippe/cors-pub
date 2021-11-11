@@ -1,10 +1,14 @@
 import flask
-import requests
-import validators
+import flask_limiter
 import markdown
 import pathlib
+import requests
+import validators
 
 app = flask.Flask(__name__)
+limiter = flask_limiter.Limiter(app,
+                                key_func=flask_limiter.util.get_remote_address,
+                                default_limits=["200 per day", "50 per hour"])
 
 method_requests_mapping = {
     'GET': requests.get,
