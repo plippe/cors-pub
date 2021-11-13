@@ -45,11 +45,9 @@ def proxy(url):
                                params=flask.request.args,
                                headers=request_headers)
 
-    response_content = flask.stream_with_context(request.iter_content())
-
-    response = flask.Response(response_content,
-                              content_type=request.headers['content-type'],
-                              status=request.status_code)
+    response = flask.Response(request.iter_content(),
+                              status=request.status_code,
+                              headers=dict(request.headers))
 
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
