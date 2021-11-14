@@ -4,6 +4,7 @@ import markdown
 import pathlib
 import requests
 import validators
+import urllib
 
 app = flask.Flask(__name__)
 limiter = flask_limiter.Limiter(app,
@@ -36,9 +37,8 @@ def proxy(url):
 
     request_function = method_requests_mapping[flask.request.method]
 
-    request_headers = filter(lambda tuple: tuple[0] != "Host",
-                             flask.request.headers)
-    request_headers = dict(request_headers)
+    request_headers = dict(flask.request.headers)
+    request_headers["Host"] = urllib.parse.urlparse(url).netloc
 
     request = request_function(url,
                                stream=True,
