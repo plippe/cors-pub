@@ -44,6 +44,7 @@ def proxy(url):
     request = request_function(url,
                                stream=True,
                                params=flask.request.args,
+                               data=flask.request.data,
                                headers=request_headers)
 
     response = flask.Response(request.iter_content(),
