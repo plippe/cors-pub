@@ -39,6 +39,7 @@ def proxy(url):
 
     request_headers = dict(flask.request.headers)
     request_headers["Host"] = urllib.parse.urlparse(url).netloc
+    request_headers["User-Agent" = "cors.pub"
 
     request = request_function(url,
                                stream=True,
